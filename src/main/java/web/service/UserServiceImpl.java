@@ -20,6 +20,24 @@ public class UserServiceImpl implements UserService {
         userDao.add(user);
     }
 
+    @Transactional
+    @Override
+    public User findById(long id) {
+        return userDao.findById(id);
+    }
+
+    @Transactional
+    @Override
+    public void update(long id, User user) {
+        userDao.update(id, user);
+    }
+
+    @Transactional
+    @Override
+    public void delete(long id) {
+        userDao.delete(id);
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<User> listUsers() {

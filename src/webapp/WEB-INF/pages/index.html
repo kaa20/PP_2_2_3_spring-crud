@@ -6,14 +6,18 @@
     <title></title>
 </head>
 <body>
-How many users do you know?
+<form th:method="get" th:action="@{/new}">
+    <input type="submit" value="Add User"/>
+</form>
+<br/>
 <table>
     <thead>
     <tr>
-        <th>id</th>
-        <th>firstName</th>
-        <th>lastName</th>
-        <th>email</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Last_Name</th>
+        <th>Email</th>
+        <th>Edit/Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -22,6 +26,14 @@ How many users do you know?
         <td th:text="${user.getFirstName()}"></td>
         <td th:text="${user.getLastName()}"></td>
         <td th:text="${user.getEmail()}"></td>
+        <td>
+            <form th:method="get" th:action="@{/{id}/edit(id=${user.getId()})}">
+                <input type="submit" value="Edit"/>
+            </form>
+            <form th:method="delete" th:action="@{/{id}(id=${user.getId()})}">
+                <input type="submit" value="Delete"/>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
