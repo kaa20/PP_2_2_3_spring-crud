@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import web.model.User;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +16,20 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+//    @Autowired
+//    private SessionFactory sessionFactory;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Override
     public void add(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        entityManager.persist(user);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<User> listUsers() {
-        TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
+        TypedQuery<User> query=entityManager.createQuery("from User", User.class);
         return query.getResultList();
     }
 
