@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import web.model.User;
 import web.service.UserService;
 
 @Controller
@@ -16,6 +17,7 @@ public class UsersController {
 
     @GetMapping("/")
     public String showUsers(ModelMap model) {
+        userService.add(new User("User1", "Lastname1", "user1@mail.ru"));
         model.addAttribute("users", userService.listUsers());
         return "index";
     }

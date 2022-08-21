@@ -1,30 +1,32 @@
 package web.dao;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import web.model.User;
 
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
 // Класс имитирует получение данных из БД
-@Component
+@Repository
 public class UserDaoImpl implements UserDao {
 
-    private List<User> users = new ArrayList<>();
-
-    public UserDaoImpl() {
-        users.add(new User(1l,"Vi",25));
-        users.add(new User(2l,"Jinx",23));
-    }
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public void add(User user) {
-        users.add(user);
+        sessionFactory.getCurrentSession().save(user);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<User> listUsers() {
-        return null;
+        TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
+        return query.getResultList();
     }
 
 }
