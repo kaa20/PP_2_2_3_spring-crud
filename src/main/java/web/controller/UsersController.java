@@ -20,6 +20,12 @@ public class UsersController {
         return "index";
     }
 
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, ModelMap model) {
+        model.addAttribute("user", userService.findById(id));
+        return "show";
+    }
+
     @GetMapping("/new")
     public String newUser(ModelMap model) {
         model.addAttribute("user", new User());
@@ -38,7 +44,7 @@ public class UsersController {
         return "edit";
     }
 
-    @PostMapping("/{id}/update")
+    @PatchMapping("/{id}")
     public String update(@PathVariable("id") int id, @ModelAttribute("user") User user) {
         userService.update(id, user);
         return "redirect:/";
