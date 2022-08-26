@@ -1,8 +1,10 @@
 package web.config;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
@@ -14,7 +16,6 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         return null;
     }
 
-
     // Добавление конфигурации, в которой инициализируем ViewResolver, для корректного отображения jsp.
     @Override
     protected Class<?>[] getServletConfigClasses() {
@@ -23,12 +24,20 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         };
     }
 
-
     /* Данный метод указывает url, на котором будет базироваться приложение */
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+
+    // Не помогает в кодировке полей
+//    @Override
+//    protected Filter[] getServletFilters() {
+//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+//        characterEncodingFilter.setEncoding("UTF-8");
+//        characterEncodingFilter.setForceEncoding(true);
+//        return new Filter[] {characterEncodingFilter};
+//    }
 
     // Подключение фильтра для использования операций PATCH и DELETE
     @Override

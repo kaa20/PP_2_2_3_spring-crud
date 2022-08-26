@@ -11,12 +11,17 @@ import web.service.UserService;
 @Controller
 public class UsersController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UsersController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String showUsers(ModelMap model) {
         model.addAttribute("users", userService.listUsers());
+//        userService.listUsers().forEach(System.out::println);
         return "index";
     }
 
