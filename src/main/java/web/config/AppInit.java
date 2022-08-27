@@ -30,19 +30,11 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         return new String[]{"/"};
     }
 
-    // Не помогает в кодировке полей
-//    @Override
-//    protected Filter[] getServletFilters() {
-//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//        characterEncodingFilter.setEncoding("UTF-8");
-//        characterEncodingFilter.setForceEncoding(true);
-//        return new Filter[] {characterEncodingFilter};
-//    }
-
     // Подключение фильтра для использования операций PATCH и DELETE
     @Override
     public void onStartup(ServletContext aServletContext) throws ServletException {
         super.onStartup(aServletContext);
+        registerEncodingFilter(aServletContext);
         registerHiddenFieldFilter(aServletContext);
     }
 
@@ -50,6 +42,11 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     private void registerHiddenFieldFilter(ServletContext aContext) {
         aContext.addFilter("hiddenHttpMethodFilter",
                 new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
+    }
+
+    private void registerEncodingFilter(ServletContext aContext) {
+        aContext.addFilter("encodingFilter",
+                new CharacterEncodingFilter("UTF-8", true)).addMappingForUrlPatterns(null ,true, "/*");
     }
 
 }
